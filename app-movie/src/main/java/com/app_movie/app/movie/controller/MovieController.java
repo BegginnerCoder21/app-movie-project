@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RequestMapping("api/movie")
 @RestController
@@ -39,6 +40,14 @@ public class MovieController {
         MovieResponse movieResponse = this.movieService.getMovie(id);
 
         return ResponseEntity.ok(movieResponse);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<MovieResponse>> getAllMovies()
+    {
+        List<MovieResponse> movieResponseList = this.movieService.getAllMovies();
+
+        return ResponseEntity.ok(movieResponseList);
     }
 
 
