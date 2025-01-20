@@ -10,10 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,6 +31,14 @@ public class MovieController {
         MovieResponse movieResponse = this.movieService.addMovie(file, movie);
 
         return new ResponseEntity<>(movieResponse,HttpStatus.CREATED);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<MovieResponse> getMovieById(@PathVariable Integer id)
+    {
+        MovieResponse movieResponse = this.movieService.getMovie(id);
+
+        return ResponseEntity.ok(movieResponse);
     }
 
 
