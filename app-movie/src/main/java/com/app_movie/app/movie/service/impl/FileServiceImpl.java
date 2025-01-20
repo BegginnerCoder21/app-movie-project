@@ -1,15 +1,15 @@
 package com.app_movie.app.movie.service.impl;
 
 import com.app_movie.app.movie.service.FileService;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+@Service
 public class FileServiceImpl implements FileService {
 
     @Override
@@ -32,7 +32,10 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public InputStream getResourceFile(String filePath, String fileName) {
-        return null;
+    public InputStream getResourceFile(String filePath, String fileName) throws FileNotFoundException {
+
+        String filePaths = filePath + File.separator + fileName;
+
+        return new FileInputStream(filePaths);
     }
 }
