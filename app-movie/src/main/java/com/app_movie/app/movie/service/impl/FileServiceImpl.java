@@ -1,5 +1,7 @@
 package com.app_movie.app.movie.service.impl;
 
+import com.app_movie.app.movie.dto.MovieRequest;
+import com.app_movie.app.movie.dto.MovieResponse;
 import com.app_movie.app.movie.service.FileService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,4 +40,6 @@ public class FileServiceImpl implements FileService {
 
         return new FileInputStream(filePaths);
     }
+
+
 }

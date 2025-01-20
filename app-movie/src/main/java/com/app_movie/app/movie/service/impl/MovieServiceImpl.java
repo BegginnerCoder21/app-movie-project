@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,5 +92,38 @@ public class MovieServiceImpl implements MovieService {
             movieResponseList.add(movieResponse);
         }
         return movieResponseList;
+    }
+
+    @Override
+    public MovieResponse updateMovie(Integer id, MovieRequest movieRequest, MultipartFile file) throws IOException {
+
+        Movie movie = this.movieRepository.findById(id).orElseThrow(() -> new RuntimeException("Aucun film n'a été trouvé !"));
+
+        String fileName = movie.getPoster();
+        if(!file.isEmpty())
+        {
+            log.info("Suppression du fichier existant !");
+            var files = Paths.get(filePath + File.separator + fileName);
+            Files.deleteIfExists(files);
+            log.info("chemin du fichier: {}", files);
+            fileName = this.fileService.uploadFile(filePath, file);
+        }
+
+        movieRequest.setPoster(fileName);
+        this.modelMapper.map(movieRequest, movie);
+
+        log.info("Demarage de la mise à jour du film:  {}", movie);
+        this.movieRepository.save(movie);
+
+        String posterUrl = baseUrl + "/movie-api/management-file/" + fileName;
+        MovieResponse movieResponse = this.modelMapper.map(movie, MovieResponse.class);
+        movieResponse.setPosterUrl(posterUrl);
+
+        return movieResponse;
+    }
+
+    @Override
+    public String destroyMovie(Integer id) {
+        return "";
     }
 }

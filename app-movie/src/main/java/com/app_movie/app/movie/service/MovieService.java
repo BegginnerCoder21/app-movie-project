@@ -14,4 +14,8 @@ public interface MovieService {
     public MovieResponse getMovie(Integer id);
 
     public List<MovieResponse> getAllMovies();
+
+    public MovieResponse updateMovie(Integer id, MovieRequest movieRequest, MultipartFile file) throws IOException;
+
+    public String destroyMovie(Integer id);
 }

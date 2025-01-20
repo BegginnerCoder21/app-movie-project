@@ -50,5 +50,15 @@ public class MovieController {
         return ResponseEntity.ok(movieResponseList);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieResponse> updateMovie(@PathVariable Integer id, @RequestPart String request, @RequestPart MultipartFile file) throws IOException {
+
+        MovieRequest movie = MovieUtils.convertToMovieResponse(request);
+
+        MovieResponse movieResponse = this.movieService.updateMovie(id, movie, file);
+
+        return ResponseEntity.ok(movieResponse);
+    }
+
 
 }
