@@ -20,7 +20,7 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @Value("posters")
+    @Value("${project.posters}")
     private String filePath;
 
     @PostMapping("/upload")

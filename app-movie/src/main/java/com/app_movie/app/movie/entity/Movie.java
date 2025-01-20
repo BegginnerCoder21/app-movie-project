@@ -2,6 +2,7 @@ package com.app_movie.app.movie.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Set;
@@ -26,13 +27,13 @@ public class Movie {
     @NotBlank(message = "Le director ne peut pas être vide")
     private String director;
     @Column(nullable = false)
-    @NotBlank(message = "Le studop ne peut pas être vide")
+    @NotBlank(message = "Le studio ne peut pas être vide")
     private String studio;
     @ElementCollection
     @CollectionTable(name = "movie_cast")
     private Set<String> movieCast;
     @Column(nullable = false)
-    @NotBlank(message = "Le release year ne peut pas être vide")
+    @NotNull(message = "Le release year ne peut pas être vide")
     private Integer releaseYear;
     @Column(nullable = false)
     @NotBlank(message = "Le poster ne peut pas être vide")

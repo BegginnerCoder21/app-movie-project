@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieDto {
+public class MovieRequest {
 
     @NotBlank(message = "Le titre ne peut pas être vide")
     private String title;
@@ -24,7 +24,8 @@ public class MovieDto {
     @NotBlank(message = "Le studio ne peut pas être vide")
     private String studio;
 
-    @NotBlank(message = "Le release year ne peut pas être vide")
+    private Set<String> movieCast;
+
     private Integer releaseYear;
 
     @NotBlank(message = "Le poster ne peut pas être vide")
