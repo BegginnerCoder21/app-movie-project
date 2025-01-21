@@ -14,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -172,7 +175,22 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MoviePageResponse getAllMoviesWithPagination(Integer pageNumber, Integer pageSize) {
-        return null;
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        Page<Movie> movies = this.movieRepository.findAll(pageable);
+
+        List<MovieResponse> movieResponseList = new ArrayList<>();
+        for (Movie movie: movies)
+        {
+            String posterUrl = baseUrl + "/movie-api/management-file/" + movie.getPoster();
+            MovieResponse movieResponse = this.modelMapper.map(movie, MovieResponse.class);
+            movieResponse.setPosterUrl(posterUrl);
+
+            movieResponseList.add(movieResponse);
+        }
+
+        return new MoviePageResponse(movieResponseList, pageNumber, pageSize, movies.getTotalElements(), movies.getTotalPages(), movies.isLast());
     }
 
     @Override
