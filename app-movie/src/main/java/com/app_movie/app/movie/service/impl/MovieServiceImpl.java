@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -194,7 +195,23 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MoviePageResponse gelAllMoviesWithPaginationAndSorting(Integer pagNumber, Integer pageSize, String sortBy, String dir) {
-        return null;
+    public MoviePageResponse gelAllMoviesWithPaginationAndSorting(Integer pageNumber, Integer pageSize, String sortBy, String dir) {
+
+        Sort sort =  dir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        Page<Movie> movies = this.movieRepository.findAll(pageable);
+
+        List<MovieResponse> movieResponseList = new ArrayList<>();
+        for (Movie movie: movies)
+        {
+            String posterUrl = baseUrl + "/movie-api/management-file/" + movie.getPoster();
+            MovieResponse movieResponse = this.modelMapper.map(movie, MovieResponse.class);
+            movieResponse.setPosterUrl(posterUrl);
+
+            movieResponseList.add(movieResponse);
+        }
+
+        return new MoviePageResponse(movieResponseList, pageNumber, pageSize, movies.getTotalElements(), movies.getTotalPages(), movies.isLast());
     }
 }

@@ -1,5 +1,6 @@
 package com.app_movie.app.movie.controller;
 
+import com.app_movie.app.movie.dto.MoviePageResponse;
 import com.app_movie.app.movie.dto.MovieRequest;
 import com.app_movie.app.movie.dto.MovieResponse;
 import com.app_movie.app.movie.service.MovieService;
@@ -63,6 +64,32 @@ public class MovieController {
         String response = this.movieService.destroyMovie(id);
 
         return ResponseEntity.ok(response);
+    }
+
+
+
+    @GetMapping("/pagination-movies")
+    public ResponseEntity<MoviePageResponse> allMoviesPagination(
+            @RequestParam(defaultValue = MovieUtils.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(defaultValue = MovieUtils.PAGE_SIZE, required = false) Integer pageSize
+            )
+    {
+        MoviePageResponse moviePageResponse = this.movieService.getAllMoviesWithPagination(pageNumber, pageSize);
+
+        return ResponseEntity.ok(moviePageResponse);
+    }
+    @GetMapping("/pagination-sorting-movies")
+    public ResponseEntity<MoviePageResponse> allMoviesPaginationAndSorting(
+            @RequestParam(defaultValue = MovieUtils.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(defaultValue = MovieUtils.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(defaultValue = MovieUtils.SORT_BY, required = false) String sortBy,
+            @RequestParam(defaultValue = MovieUtils.PAGE_NUMBER, required = false) String dir
+    )
+    {
+        MoviePageResponse moviePageResponse = this.movieService.gelAllMoviesWithPaginationAndSorting(pageNumber, pageSize, sortBy, dir);
+        return ResponseEntity.ok(moviePageResponse);
+
+
     }
 
 
