@@ -4,8 +4,6 @@ import com.app_movie.app.movie.dto.MovieRequest;
 import com.app_movie.app.movie.dto.MovieResponse;
 import com.app_movie.app.movie.service.MovieService;
 import com.app_movie.app.movie.utils.MovieUtils;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,6 +56,13 @@ public class MovieController {
         MovieResponse movieResponse = this.movieService.updateMovie(id, movie, file);
 
         return ResponseEntity.ok(movieResponse);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteMovie(@PathVariable Integer id) throws IOException {
+        String response = this.movieService.destroyMovie(id);
+
+        return ResponseEntity.ok(response);
     }
 
 

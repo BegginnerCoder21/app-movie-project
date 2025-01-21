@@ -36,7 +36,6 @@ public class Movie {
 
     @ElementCollection
     @CollectionTable(name = "movie_cast")
-    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private Set<String> movieCast;
 
     @Column(nullable = false)
