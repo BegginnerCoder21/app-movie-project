@@ -48,6 +48,8 @@ public class MovieServiceImpl implements MovieService {
     @Value("${project.posters}")
     private String filePath;
 
+    private static final String PATH_FILE_SEPARATOR = "/movie-api/management-file/";
+
     @Transactional
     @Override
     public MovieResponse addMovie(MultipartFile file, MovieRequest movieRequest) throws IOException {
@@ -70,7 +72,7 @@ public class MovieServiceImpl implements MovieService {
         log.info("Demarage du stockage du film: {}", movie);
         this.movieRepository.save(movie);
 
-        String posterUrl = baseUrl + "/movie-api/management-file/" + uploadedFileName;
+        String posterUrl = baseUrl + PATH_FILE_SEPARATOR + uploadedFileName;
 
         MovieResponse movieResponse = this.modelMapper.map(movie, MovieResponse.class);
         movieResponse.setPosterUrl(posterUrl);
@@ -90,7 +92,7 @@ public class MovieServiceImpl implements MovieService {
             throw new MovieNotExistsException("Aucun film n'a été trouvé avec l'id: " +id);
         }
 
-        String posterUrl = baseUrl + "/movie-api/management-file/" + movie.get().getPoster();
+        String posterUrl = baseUrl + PATH_FILE_SEPARATOR + movie.get().getPoster();
 
         MovieResponse movieResponse = this.modelMapper.map(movie, MovieResponse.class);
         movieResponse.setPosterUrl(posterUrl);
@@ -107,7 +109,7 @@ public class MovieServiceImpl implements MovieService {
         List<MovieResponse> movieResponseList = new ArrayList<>();
         for (Movie movie: movies)
         {
-            String posterUrl = baseUrl + "/movie-api/management-file/" + movie.getPoster();
+            String posterUrl = baseUrl + PATH_FILE_SEPARATOR + movie.getPoster();
             MovieResponse movieResponse = this.modelMapper.map(movie, MovieResponse.class);
             movieResponse.setPosterUrl(posterUrl);
 
@@ -154,7 +156,7 @@ public class MovieServiceImpl implements MovieService {
         log.info("Démarrage de la mise à jour du film: {}", movie);
         this.movieRepository.save(movie);
 
-        String posterUrl = this.baseUrl + "/movie-api/management-file/" + fileName;
+        String posterUrl = this.baseUrl + PATH_FILE_SEPARATOR + fileName;
         MovieResponse movieResponse = this.modelMapper.map(movie, MovieResponse.class);
         movieResponse.setPosterUrl(posterUrl);
 
@@ -184,7 +186,7 @@ public class MovieServiceImpl implements MovieService {
         List<MovieResponse> movieResponseList = new ArrayList<>();
         for (Movie movie: movies)
         {
-            String posterUrl = baseUrl + "/movie-api/management-file/" + movie.getPoster();
+            String posterUrl = baseUrl + PATH_FILE_SEPARATOR + movie.getPoster();
             MovieResponse movieResponse = this.modelMapper.map(movie, MovieResponse.class);
             movieResponse.setPosterUrl(posterUrl);
 
@@ -205,7 +207,7 @@ public class MovieServiceImpl implements MovieService {
         List<MovieResponse> movieResponseList = new ArrayList<>();
         for (Movie movie: movies)
         {
-            String posterUrl = baseUrl + "/movie-api/management-file/" + movie.getPoster();
+            String posterUrl = baseUrl + PATH_FILE_SEPARATOR + movie.getPoster();
             MovieResponse movieResponse = this.modelMapper.map(movie, MovieResponse.class);
             movieResponse.setPosterUrl(posterUrl);
 

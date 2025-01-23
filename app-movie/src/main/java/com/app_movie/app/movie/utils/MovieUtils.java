@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MovieUtils {
+    private MovieUtils() {
+    }
 
     public static final String PAGE_NUMBER = "0";
     public static final String PAGE_SIZE = "3";

@@ -83,12 +83,11 @@ public class MovieController {
             @RequestParam(defaultValue = MovieUtils.PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestParam(defaultValue = MovieUtils.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(defaultValue = MovieUtils.SORT_BY, required = false) String sortBy,
-            @RequestParam(defaultValue = MovieUtils.PAGE_NUMBER, required = false) String dir
+            @RequestParam(defaultValue = MovieUtils.SORT_DIR, required = false) String dir
     )
     {
         MoviePageResponse moviePageResponse = this.movieService.gelAllMoviesWithPaginationAndSorting(pageNumber, pageSize, sortBy, dir);
         return ResponseEntity.ok(moviePageResponse);
-
 
     }
 
