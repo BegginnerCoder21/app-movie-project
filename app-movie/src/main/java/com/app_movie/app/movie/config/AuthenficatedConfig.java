@@ -22,7 +22,7 @@ public class AuthenficatedConfig {
     @Bean
     public UserDetailsService userDetailsService()
     {
-        return username -> this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("L'utilisateur avec pour email '%s' n'a pas été trouvé.", username)));
+        return username -> this.userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(String.format("L'utilisateur avec pour email '%s' n'a pas été trouvé.", username)));
     }
 
     @Bean
