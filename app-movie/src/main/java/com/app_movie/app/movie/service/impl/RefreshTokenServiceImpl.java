@@ -1,10 +1,9 @@
 package com.app_movie.app.movie.service.impl;
 
 import com.app_movie.app.movie.entity.RefreshToken;
-import com.app_movie.app.movie.entity.RefreshTokenRepository;
+import com.app_movie.app.movie.repository.RefreshTokenRepository;
 import com.app_movie.app.movie.entity.User;
 import com.app_movie.app.movie.entity.UserRepository;
-import org.hibernate.id.uuid.UuidGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,6 @@
-package com.app_movie.app.movie.entity;
+package com.app_movie.app.movie.repository;
 
+import com.app_movie.app.movie.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
