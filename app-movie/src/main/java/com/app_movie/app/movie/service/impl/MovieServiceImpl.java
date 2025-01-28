@@ -33,22 +33,25 @@ import java.util.stream.Collectors;
 @Service
 public class MovieServiceImpl implements MovieService {
 
-    @Autowired
-    private FileService fileService;
+    private final FileService fileService;
 
     @Value("${base.url}")
     private String baseUrl;
 
-    @Autowired
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     @Value("${project.posters}")
     private String filePath;
 
     private static final String PATH_FILE_SEPARATOR = "/movie-api/management-file/";
+
+    public MovieServiceImpl(FileService fileService, MovieRepository movieRepository, ModelMapper modelMapper) {
+        this.fileService = fileService;
+        this.movieRepository = movieRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Transactional
     @Override

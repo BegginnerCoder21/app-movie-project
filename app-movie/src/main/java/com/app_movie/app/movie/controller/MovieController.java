@@ -5,10 +5,9 @@ import com.app_movie.app.movie.dto.MovieRequest;
 import com.app_movie.app.movie.dto.MovieResponse;
 import com.app_movie.app.movie.service.MovieService;
 import com.app_movie.app.movie.utils.MovieUtils;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,11 +18,14 @@ import java.util.List;
 @RestController
 public class MovieController {
 
-    @Autowired
-    private MovieService movieService;
-    @Autowired
-    private ModelMapper modelMapper;
 
+    private final MovieService movieService;
+
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/add-movie")
     public ResponseEntity<MovieResponse> addMovie(@RequestPart MultipartFile file,@RequestPart String request) throws IOException {
 

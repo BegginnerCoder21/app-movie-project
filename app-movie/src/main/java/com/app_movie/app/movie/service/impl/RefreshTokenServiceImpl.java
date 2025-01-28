@@ -4,6 +4,7 @@ import com.app_movie.app.movie.entity.RefreshToken;
 import com.app_movie.app.movie.repository.RefreshTokenRepository;
 import com.app_movie.app.movie.entity.User;
 import com.app_movie.app.movie.entity.UserRepository;
+import com.app_movie.app.movie.service.RefreshTokenService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Service
-public class RefreshTokenServiceImpl {
+public class RefreshTokenServiceImpl implements RefreshTokenService {
 
 
     private final UserRepository userRepository;
@@ -23,6 +24,7 @@ public class RefreshTokenServiceImpl {
         this.refreshTokenRepository = refreshTokenRepository;
     }
 
+    @Override
     public RefreshToken creatingRefreshToken(String username)
     {
         User user = this.userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Aucun utilisateur n'a été trouvé"));
@@ -44,6 +46,7 @@ public class RefreshTokenServiceImpl {
 
     }
 
+    @Override
     public RefreshToken verifyRefreshToken(String refreshToken)
     {
         RefreshToken refreshTok = this.refreshTokenRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new RuntimeException("Aucun refresh token n'a été trouvé !"));
