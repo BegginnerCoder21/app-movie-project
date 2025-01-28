@@ -4,7 +4,6 @@ import com.app_movie.app.movie.entity.RefreshToken;
 import com.app_movie.app.movie.repository.RefreshTokenRepository;
 import com.app_movie.app.movie.entity.User;
 import com.app_movie.app.movie.entity.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +13,15 @@ import java.util.UUID;
 @Service
 public class RefreshTokenServiceImpl {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
+
+    private final UserRepository userRepository;
+
+    private final RefreshTokenRepository refreshTokenRepository;
+
+    public RefreshTokenServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository) {
+        this.userRepository = userRepository;
+        this.refreshTokenRepository = refreshTokenRepository;
+    }
 
     public RefreshToken creatingRefreshToken(String username)
     {
