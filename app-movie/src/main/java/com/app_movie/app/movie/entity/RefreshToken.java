@@ -2,6 +2,7 @@ package com.app_movie.app.movie.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.Instant;
@@ -20,7 +21,7 @@ public class RefreshToken {
     private Long id;
     @NotBlank(message = "Veuillez entrer le token svp")
     private String refreshToken;
-    @NotBlank(message = "Veuillez entrer le temps d'expiration svp")
+    @NotNull(message = "Veuillez entrer le temps d'expiration svp")
     private Instant expirationTime;
     @OneToOne
     private User user;

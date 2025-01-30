@@ -3,6 +3,7 @@ package com.app_movie.app.movie.entity;
 import com.app_movie.app.movie.entity.enumeration.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,7 +31,7 @@ public class User implements UserDetails {
     @NotBlank(message = "L'email est obligatoire")
     private String email;
     @NotBlank(message = "Le mot de passe est obligatoire")
-    @Column(unique = true, length = 8)
+    @Size(min = 8, message = "Le mot de passe est de minimum 8 caractères")
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole role;

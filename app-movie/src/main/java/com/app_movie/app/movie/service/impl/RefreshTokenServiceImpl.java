@@ -35,12 +35,15 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         {
             long expirationRefreshToken = 30L *24 *60 *60 *1000;
 
-            return RefreshToken.builder()
+            refreshToken = RefreshToken.builder()
                     .refreshToken(UUID.randomUUID().toString())
                     .expirationTime(Instant.now().plusMillis(expirationRefreshToken))
                     .user(user)
                     .build();
+
+            this.refreshTokenRepository.save(refreshToken);
         }
+
 
         return refreshToken;
 
