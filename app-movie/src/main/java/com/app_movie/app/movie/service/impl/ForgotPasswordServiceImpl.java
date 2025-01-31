@@ -8,11 +8,14 @@ import com.app_movie.app.movie.repository.ForgotPasswordRepository;
 import com.app_movie.app.movie.service.EmailService;
 import com.app_movie.app.movie.service.ForgotPasswordService;
 import com.app_movie.app.movie.utils.AuthUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Date;
 
+@Slf4j
 @Service
 public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
@@ -51,5 +54,21 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
         this.emailService.sendMail(mailBody);
 
         return "L'otp de rénitialisation a été envoyé !";
+    }
+
+    @Override
+    public String verifyOtp(String otp, String email) {
+
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("L'utilisateur avec ce email n'a pas été trouvé !"));
+
+        ForgotPassword forgotPassword = this.forgotPasswordRepository.findByOtpAndUser(otp, user).orElseThrow(() -> new RuntimeException("L'otp fourni ne correspond pas à ce utilisateur !"));
+
+        if(forgotPassword.getExpirationTime().before(Date.from(Instant.now())))
+        {
+            log.warn("L'otp a expiré");
+            return "L'otp que vous avez fourni a expiré !";
+        }
+
+        return "OTP verifié avec succès";
     }
 }
