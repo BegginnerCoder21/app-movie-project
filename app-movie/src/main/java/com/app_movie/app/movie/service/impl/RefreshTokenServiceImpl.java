@@ -3,7 +3,7 @@ package com.app_movie.app.movie.service.impl;
 import com.app_movie.app.movie.entity.RefreshToken;
 import com.app_movie.app.movie.repository.RefreshTokenRepository;
 import com.app_movie.app.movie.entity.User;
-import com.app_movie.app.movie.entity.UserRepository;
+import com.app_movie.app.movie.repository.UserRepository;
 import com.app_movie.app.movie.service.RefreshTokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

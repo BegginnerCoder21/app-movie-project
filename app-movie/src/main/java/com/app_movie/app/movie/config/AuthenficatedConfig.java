@@ -1,6 +1,6 @@
 package com.app_movie.app.movie.config;
 
-import com.app_movie.app.movie.entity.UserRepository;
+import com.app_movie.app.movie.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

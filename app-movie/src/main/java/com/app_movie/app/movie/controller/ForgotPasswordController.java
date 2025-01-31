@@ -1,12 +1,9 @@
 package com.app_movie.app.movie.controller;
 
+import com.app_movie.app.movie.dto.ChangePassword;
 import com.app_movie.app.movie.service.ForgotPasswordService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/forgot-password")
@@ -25,9 +22,14 @@ public class ForgotPasswordController {
     @PostMapping("verify-otp/{otp}/{email}")
     public ResponseEntity<String> verifyOtp(@PathVariable String otp, @PathVariable String email)
     {
-        String result = this.forgotPasswordService.verifyOtp(otp, email);
+        return this.forgotPasswordService.verifyOtp(otp, email);
 
-        return new ResponseEntity<>(result, HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @PostMapping("/change-password/{email}")
+    public ResponseEntity<String> changePassword(@PathVariable String email, @RequestBody ChangePassword changePassword)
+    {
+        return this.forgotPasswordService.changePassword(email, changePassword);
     }
 
 

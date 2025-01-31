@@ -5,7 +5,7 @@ import com.app_movie.app.movie.dto.LoginRequest;
 import com.app_movie.app.movie.dto.RegisterRequest;
 import com.app_movie.app.movie.entity.RefreshToken;
 import com.app_movie.app.movie.entity.User;
-import com.app_movie.app.movie.entity.UserRepository;
+import com.app_movie.app.movie.repository.UserRepository;
 import com.app_movie.app.movie.entity.enumeration.UserRole;
 import com.app_movie.app.movie.service.AuthService;
 import com.app_movie.app.movie.service.JwtService;
