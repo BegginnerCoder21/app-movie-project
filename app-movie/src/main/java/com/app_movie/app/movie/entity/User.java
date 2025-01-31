@@ -35,8 +35,10 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    @OneToOne(mappedBy = "user")
+    @OneToOne
     private RefreshToken refreshToken;
+    @OneToOne(mappedBy = "user")
+    private ForgotPassword forgotPassword;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
