@@ -42,6 +42,13 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("L'utilisateur avec ce email n'a pas été trouvé"));
 
+        ForgotPassword otpUserExist = user.getForgotPassword();
+
+        if(otpUserExist != null)
+        {
+            log.info("suppression du token du user: {}", user.getEmail());
+            this.forgotPasswordRepository.destroyUserOtpById(otpUserExist.getId());
+        }
         Integer otp = AuthUtils.generateOtp();
 
         MailBody mailBody = MailBody.builder()
@@ -73,6 +80,7 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
         if(forgotPassword.getExpirationTime().before(Date.from(Instant.now())))
         {
             log.warn("L'otp a expiré");
+            this.forgotPasswordRepository.destroyUserOtpById(forgotPassword.getId());
             return new ResponseEntity<>("L'otp que vous avez fourni a expiré !",HttpStatus.EXPECTATION_FAILED);
         }
 

@@ -32,7 +32,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         User user = this.userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Aucun utilisateur n'a été trouvé"));
 
         RefreshToken refreshToken = user.getRefreshToken();
-
+        log.info("test: {}", refreshToken);
         if(refreshToken == null)
         {
             long expirationRefreshToken = 30L *24 *60 *60 *1000;
@@ -57,7 +57,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         RefreshToken refreshTok = this.refreshTokenRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new RuntimeException("Aucun refresh token n'a été trouvé !"));
         if(refreshTok.getExpirationTime().isBefore(Instant.now()))
         {
-            this.refreshTokenRepository.deleteById(refreshTok.getId());
+            this.refreshTokenRepository.destroyRefreshTokenById(refreshTok.getId());
             throw new RuntimeException("Le refresh token que vous avez fourni a expiré !");
         }
 

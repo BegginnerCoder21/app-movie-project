@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/forgot-password")
 public class ForgotPasswordController {
 
-    private ForgotPasswordService forgotPasswordService;
+    private final ForgotPasswordService forgotPasswordService;
 
-    @PostMapping("veriry-email/{email}")
+    public ForgotPasswordController(ForgotPasswordService forgotPasswordService) {
+        this.forgotPasswordService = forgotPasswordService;
+    }
+
+    @PostMapping("verify-email/{email}")
     public ResponseEntity<String> verifyEmail(@PathVariable String email)
     {
         String result = this.forgotPasswordService.verifyEmail(email);
